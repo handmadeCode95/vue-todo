@@ -1,14 +1,16 @@
 <template>
     <v-sheet class="rounded-lg" max-width="400">
-        <v-form @submit.prevent="addTodo">
+        <v-form ref="todoForm" @submit.prevent="addTodo" validate-on="submit">
             <v-text-field
+                ref="todoInput"
                 v-model="todo"
                 label="Todo"
-                append-inner-icon="mdi-plus"
+                :rules="todoRules"
                 clearable
+                append-inner-icon="mdi-plus"
             />
             <v-btn type="submit" variant="outlined" class="mt-2" block>
-                Save
+                Add Todo
             </v-btn>
         </v-form>
     </v-sheet>
@@ -18,14 +20,16 @@
 export default {
     data: () => ({
         todo: "",
+        todoRules: [(value) => !!value || "Todo is required"],
     }),
     methods: {
-        addTodo: function () {
+        addTodo: async function () {
+            const { valid } = await this.$refs.todoForm.validate();
+
+            if (!valid) return;
+
             this.$emit("addTodo", this.todo);
-            this.clearInput();
-        },
-        clearInput: function () {
-            this.todo = "";
+            this.$refs.todoForm.reset();
         },
     },
 };
