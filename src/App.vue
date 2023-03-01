@@ -2,10 +2,14 @@
     <v-app>
         <todo-header></todo-header>
         <v-container>
-            <todo-input></todo-input>
+            <todo-input v-on:addTodo="addTodoItem"></todo-input>
             <v-divider class="my-6"></v-divider>
-            <todo-list></todo-list>
-            <todo-footer></todo-footer>
+            <todo-list
+                v-bind:todoItems="todoItems"
+                v-on:removeTodo="removeTodoItem"
+                v-on:toggleComplete="toggleCompleteItem"
+            ></todo-list>
+            <todo-footer v-on:allClear="allClearItems"></todo-footer>
         </v-container>
     </v-app>
 </template>
@@ -15,7 +19,52 @@ import TodoFooter from "./components/TodoFooter.vue";
 import TodoHeader from "./components/TodoHeader.vue";
 import TodoInput from "./components/TodoInput.vue";
 import TodoList from "./components/TodoList.vue";
+
 export default {
+    data: () => ({
+        TODOS_KEY: "todos",
+        todoItems: [],
+    }),
+    methods: {
+        setTodoItems: function () {
+            localStorage.setItem(
+                this.TODOS_KEY,
+                JSON.stringify(this.todoItems)
+            );
+        },
+        getTodoItems: function () {
+            const savedTodos = localStorage.getItem(this.TODOS_KEY);
+            if (savedTodos !== null) {
+                this.todoItems = [...JSON.parse(savedTodos)];
+            }
+        },
+        addTodoItem: function (todo) {
+            const newTodo = {
+                todo,
+                completed: false,
+            };
+            this.todoItems.push(newTodo);
+
+            this.setTodoItems();
+        },
+        removeTodoItem: function (index) {
+            this.todoItems.splice(index, 1);
+
+            this.setTodoItems();
+        },
+        toggleCompleteItem: function (index) {
+            this.todoItems[index].completed = !this.todoItems[index].completed;
+
+            this.setTodoItems();
+        },
+        allClearItems: function () {
+            this.todoItems = [];
+            localStorage.removeItem(this.TODOS_KEY);
+        },
+    },
+    created: function () {
+        this.getTodoItems();
+    },
     components: { TodoHeader, TodoList, TodoInput, TodoFooter },
 };
 </script>

@@ -17,13 +17,9 @@
 
 <script>
 export default {
-    data: () => ({
-        TODOS_KEY: "todos",
-        todoItems: [],
-    }),
     methods: {
         allClear: function () {
-            localStorage.removeItem(this.TODOS_KEY);
+            this.$emit("allClear");
         },
     },
 };

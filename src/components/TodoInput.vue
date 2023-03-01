@@ -17,33 +17,11 @@
 <script>
 export default {
     data: () => ({
-        TODOS_KEY: "todos",
         todo: "",
-        todoItems: [],
     }),
     methods: {
-        setTodos: function () {
-            localStorage.setItem(
-                this.TODOS_KEY,
-                JSON.stringify(this.todoItems)
-            );
-        },
-        getTodos: function () {
-            const savedTodos = localStorage.getItem(this.TODOS_KEY);
-            if (savedTodos !== null) {
-                this.todoItems = [...JSON.parse(savedTodos)];
-            }
-        },
         addTodo: function () {
-            this.getTodos();
-
-            const newTodo = {
-                completed: false,
-                todo: this.todo,
-            };
-            this.todoItems.push(newTodo);
-
-            this.setTodos();
+            this.$emit("addTodo", this.todo);
             this.clearInput();
         },
         clearInput: function () {

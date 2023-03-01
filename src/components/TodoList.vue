@@ -33,34 +33,16 @@
 
 <script>
 export default {
-    data: () => ({
-        TODOS_KEY: "todos",
-        todoItems: [],
-    }),
+    props: {
+        todoItems: Array,
+    },
     methods: {
-        setTodos: function () {
-            localStorage.setItem(
-                this.TODOS_KEY,
-                JSON.stringify(this.todoItems)
-            );
-        },
-        getTodos: function () {
-            const savedTodos = localStorage.getItem(this.TODOS_KEY);
-            if (savedTodos !== null) {
-                this.todoItems = [...JSON.parse(savedTodos)];
-            }
-        },
         removeTodo: function (index) {
-            this.todoItems.splice(index, 1);
-            this.setTodos();
+            this.$emit("removeTodo", index);
         },
         toggleComplete: function (index) {
-            this.todoItems[index].completed = !this.todoItems[index].completed;
-            this.setTodos();
+            this.$emit("toggleComplete", index);
         },
-    },
-    created: function () {
-        this.getTodos();
     },
 };
 </script>
