@@ -1,15 +1,16 @@
 <template>
     <v-app>
-        <todo-header></todo-header>
+        <todo-header />
         <v-container>
-            <todo-input v-on:addTodo="addTodoItem"></todo-input>
-            <v-divider class="my-6"></v-divider>
+            <todo-input v-on:addTodo="addTodoItem" />
+            <v-divider class="my-6" />
             <todo-list
                 v-bind:todoItems="todoItems"
                 v-on:removeTodo="removeTodoItem"
                 v-on:toggleComplete="toggleCompleteItem"
-            ></todo-list>
-            <todo-footer v-on:allClear="allClearItems"></todo-footer>
+            />
+            <v-divider v-if="todoItems.length > 0" class="my-6" />
+            <todo-footer v-on:allClear="allClearItems" />
         </v-container>
     </v-app>
 </template>
