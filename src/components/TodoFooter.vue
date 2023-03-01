@@ -6,7 +6,7 @@
                 append-icon="mdi-trash-can-outline"
                 v-on:click="allClear()"
                 v-bind="props"
-                :color="isHovering && 'error'"
+                :color="isHovering ? 'error' : ''"
                 block
             >
                 All Clear
