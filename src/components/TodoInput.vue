@@ -1,13 +1,15 @@
 <template>
-    <v-sheet class="rounded-lg" width="304">
+    <v-sheet class="rounded-lg" max-width="400">
         <v-form @submit.prevent="addTodo">
             <v-text-field
                 v-model="todo"
                 label="Todo"
                 append-inner-icon="mdi-plus"
                 clearable
-            ></v-text-field>
-            <v-btn type="submit" block class="mt-2">Save</v-btn>
+            />
+            <v-btn type="submit" variant="outlined" class="mt-2" block>
+                Save
+            </v-btn>
         </v-form>
     </v-sheet>
 </template>
@@ -20,6 +22,12 @@ export default {
         todoItems: [],
     }),
     methods: {
+        setTodos: function () {
+            localStorage.setItem(
+                this.TODOS_KEY,
+                JSON.stringify(this.todoItems)
+            );
+        },
         getTodos: function () {
             const savedTodos = localStorage.getItem(this.TODOS_KEY);
             if (savedTodos !== null) {
@@ -29,12 +37,13 @@ export default {
         addTodo: function () {
             this.getTodos();
 
-            this.todoItems.push(this.todo);
-            localStorage.setItem(
-                this.TODOS_KEY,
-                JSON.stringify(this.todoItems)
-            );
+            const newTodo = {
+                completed: false,
+                todo: this.todo,
+            };
+            this.todoItems.push(newTodo);
 
+            this.setTodos();
             this.clearInput();
         },
         clearInput: function () {
@@ -43,5 +52,3 @@ export default {
     },
 };
 </script>
-
-<style></style>

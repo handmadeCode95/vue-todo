@@ -5,8 +5,8 @@
             <todo-input></todo-input>
             <v-divider class="my-6"></v-divider>
             <todo-list></todo-list>
+            <todo-footer></todo-footer>
         </v-container>
-        <todo-footer></todo-footer>
     </v-app>
 </template>
 
