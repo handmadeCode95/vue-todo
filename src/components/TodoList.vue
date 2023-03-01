@@ -1,6 +1,6 @@
 <template>
     <v-sheet class="rounded-lg" max-width="400">
-        <v-list>
+        <v-slide-y-transition leave-absolute group tag="v-list">
             <v-list-item
                 v-for="(item, index) in todoItems"
                 :key="item?.todo + index"
@@ -34,7 +34,7 @@
                     </v-hover>
                 </template>
             </v-list-item>
-        </v-list>
+        </v-slide-y-transition>
     </v-sheet>
 </template>
 
