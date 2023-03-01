@@ -44,10 +44,10 @@ export default {
         todoItems: Array,
     },
     methods: {
-        removeTodo: function (index) {
+        removeTodo(index) {
             this.$emit("removeTodo", index);
         },
-        toggleComplete: function (index) {
+        toggleComplete(index) {
             this.$emit("toggleComplete", index);
         },
     },

@@ -18,7 +18,7 @@
 <script>
 export default {
     methods: {
-        allClear: function () {
+        allClear() {
             this.$emit("allClear");
         },
     },

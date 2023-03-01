@@ -22,24 +22,26 @@ import TodoInput from "./components/TodoInput.vue";
 import TodoList from "./components/TodoList.vue";
 
 export default {
-    data: () => ({
-        TODOS_KEY: "todos",
-        todoItems: [],
-    }),
+    data() {
+        return {
+            TODOS_KEY: "todos",
+            todoItems: [],
+        };
+    },
     methods: {
-        setTodoItems: function () {
+        setTodoItems() {
             localStorage.setItem(
                 this.TODOS_KEY,
                 JSON.stringify(this.todoItems)
             );
         },
-        getTodoItems: function () {
+        getTodoItems() {
             const savedTodos = localStorage.getItem(this.TODOS_KEY);
             if (savedTodos !== null) {
                 this.todoItems = [...JSON.parse(savedTodos)];
             }
         },
-        addTodoItem: function (todo) {
+        addTodoItem(todo) {
             const newTodo = {
                 todo,
                 completed: false,
@@ -48,22 +50,22 @@ export default {
 
             this.setTodoItems();
         },
-        removeTodoItem: function (index) {
+        removeTodoItem(index) {
             this.todoItems.splice(index, 1);
 
             this.setTodoItems();
         },
-        toggleCompleteItem: function (index) {
+        toggleCompleteItem(index) {
             this.todoItems[index].completed = !this.todoItems[index].completed;
 
             this.setTodoItems();
         },
-        allClearItems: function () {
+        allClearItems() {
             this.todoItems = [];
             localStorage.removeItem(this.TODOS_KEY);
         },
     },
-    created: function () {
+    created() {
         this.getTodoItems();
     },
     components: { TodoHeader, TodoList, TodoInput, TodoFooter },

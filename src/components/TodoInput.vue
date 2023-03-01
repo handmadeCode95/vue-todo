@@ -18,12 +18,14 @@
 
 <script>
 export default {
-    data: () => ({
-        todo: "",
-        todoRules: [(value) => !!value || "Todo is required"],
-    }),
+    data() {
+        return {
+            todo: "",
+            todoRules: [(value) => !!value || "Todo is required"],
+        };
+    },
     methods: {
-        addTodo: async function () {
+        async addTodo() {
             const { valid } = await this.$refs.todoForm.validate();
 
             if (!valid) return;
