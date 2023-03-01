@@ -4,7 +4,6 @@
             <v-list-item
                 v-for="(item, index) in todoItems"
                 :key="item?.todo + index"
-                :title="item?.todo"
                 :value="index"
                 v-on:click="toggleComplete(index)"
             >
@@ -15,6 +14,15 @@
                         ></v-checkbox-btn>
                     </v-list-item-action>
                 </template>
+
+                <v-list-item-title
+                    :class="
+                        item?.completed ? 'text-decoration-line-through' : ''
+                    "
+                >
+                    {{ item?.todo }}
+                </v-list-item-title>
+
                 <template v-slot:append>
                     <v-hover v-slot="{ isHovering, props }">
                         <v-btn
