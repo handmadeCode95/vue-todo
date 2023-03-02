@@ -4,12 +4,13 @@
             <v-list-item
                 v-for="(item, index) in todoItems"
                 :key="item?.todo + index"
+                :value="index"
+                v-on:click="toggleComplete(index)"
             >
                 <template v-slot:prepend>
                     <v-list-item-action start>
                         <v-checkbox-btn
                             v-bind:model-value="item?.completed"
-                            v-on:click="toggleComplete(index)"
                         ></v-checkbox-btn>
                     </v-list-item-action>
                 </template>
@@ -25,7 +26,7 @@
                 <template v-slot:append>
                     <v-hover v-slot="{ isHovering, props }">
                         <v-btn
-                            v-on:click="removeTodo(index)"
+                            v-on:click.stop="removeTodo(index)"
                             v-bind="props"
                             :color="isHovering ? 'error' : 'grey-lighten-1'"
                             icon="mdi-minus-box"
